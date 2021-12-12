@@ -9,9 +9,17 @@ import SwiftUI
 
 @main
 struct ForecastApp: App {
+    @StateObject var locationManager = FCLocationManager()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if let _ = locationManager.location {
+                FCHomeView()
+                    .environmentObject(locationManager)
+            } else {
+                FCWelcomeView()
+                    .environmentObject(locationManager)
+            }
         }
     }
 }
